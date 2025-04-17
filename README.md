@@ -18,6 +18,8 @@ This software design apporach seperates the functionality into two components:
 ## User Space functions
 - It reads the data from driver using sysfs every 10s.
 - Based on the data read (Speed) it calculates the intensity of each LED and writes into the sysfs so LEDs intensity can be determined by the driver.
+### UML/Block Diagram
+![Block Diagram](https://github.com/user-attachments/assets/70d43551-3478-4cab-af11-99a42e6296ac)
 
 ### Hardware setup
 ![Hardware_Setup](https://github.com/user-attachments/assets/54628355-a3c8-4f82-bb83-38c492b69d68)
