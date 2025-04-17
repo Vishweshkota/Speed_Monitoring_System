@@ -24,4 +24,5 @@ This software design apporach seperates the functionality into two components:
 
 ### Working Demo
 https://github.com/user-attachments/assets/a2cfe656-ab33-441b-a3db-d474e044aef5
+https://github.com/user-attachments/assets/17c6de13-2fec-4713-9045-4445cd09ebd7
 
