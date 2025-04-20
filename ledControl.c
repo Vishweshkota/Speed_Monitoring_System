@@ -181,19 +181,19 @@ static ssize_t show_clicks(struct kobject *kobj, struct kobj_attribute *attr, ch
 static ssize_t store_led1(struct kobject *kobj, struct kobj_attribute *attr, const char *buff, size_t len)
 {	
 	sscanf(buff, "%d", &intensity_Led1);
-	return -EINVAL;
+	return len;
 }
 // LED 2 intensity
 static ssize_t store_led2(struct kobject *kobj, struct kobj_attribute *attr, const char *buff, size_t len)
 {
 	sscanf(buff, "%d", &intensity_Led2);
-	return -EINVAL;
+	return len;
 }
 // LED 3 intensity
 static ssize_t store_led3(struct kobject *kobj, struct kobj_attribute *attr, const char *buff, size_t len)
 {	
 	sscanf(buff, "%d", &intensity_Led3);
-	return -EINVAL;
+	return len;
 }
 /*
 	Function to store value into clicks variable
@@ -202,7 +202,7 @@ static ssize_t store_led3(struct kobject *kobj, struct kobj_attribute *attr, con
 static ssize_t store_clicks(struct kobject *kobj, struct kobj_attribute *attr, const char *buff, size_t len)
 {	
 	sscanf(buff, "%d", &clicks);
-	return -EINVAL;
+	return len;
 }
 // Defining show and store attributes
 static struct kobj_attribute led1_attribute = __ATTR(led1, 0660, show_led1, store_led1);
@@ -262,20 +262,20 @@ static ssize_t device_write(struct file *filp, const char __user *buff,
 	char kermsg[BUF_LEN+1] = {"\0"};
 	if(copy_from_user(kermsg, buff, len-1)){return -EFAULT;}
 	// Setting intensity of LED 1
-	if(strcmp(kermsg, "Led1_intensity=25")){sscanf("25", "%d", &intensity_Led1);} 
-	if(strcmp(kermsg, "Led1_intensity=50")){sscanf("50", "%d", &intensity_Led1);} 
-	if(strcmp(kermsg, "Led1_intensity=75")){sscanf("75", "%d", &intensity_Led1);} 
-	if(strcmp(kermsg, "Led1_intensity=100")){sscanf("100", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=25")==0){sscanf("25", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=50")==0){sscanf("50", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=75")==0){sscanf("75", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=100")==0){sscanf("100", "%d", &intensity_Led1);} 
 	// Setting intensity of LED 2
-	if(strcmp(kermsg, "Led2_intensity=25")){sscanf("25", "%d", &intensity_Led2);} 
-	if(strcmp(kermsg, "Led2_intensity=50")){sscanf("50", "%d", &intensity_Led2);} 
-	if(strcmp(kermsg, "Led2_intensity=75")){sscanf("75", "%d", &intensity_Led2);} 
-	if(strcmp(kermsg, "Led2_intensity=100")){sscanf("100", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=25")==0){sscanf("25", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=50")==0){sscanf("50", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=75")==0){sscanf("75", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=100")==0){sscanf("100", "%d", &intensity_Led2);} 
 	// Setting intensity of LED 3
-	if(strcmp(kermsg, "Led3_intensity=25")){sscanf("25", "%d", &intensity_Led3);} 
-	if(strcmp(kermsg, "Led3_intensity=50")){sscanf("50", "%d", &intensity_Led3);} 
-	if(strcmp(kermsg, "Led3_intensity=75")){sscanf("75", "%d", &intensity_Led3);} 
-	if(strcmp(kermsg, "Led3_intensity=100")){sscanf("100", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=25")==0){sscanf("25", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=50")==0){sscanf("50", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=75")==0){sscanf("75", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=100")==0){sscanf("100", "%d", &intensity_Led3);} 
     return -EINVAL; 
 } 
 
