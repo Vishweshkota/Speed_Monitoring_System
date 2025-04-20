@@ -132,7 +132,6 @@ enum hrtimer_restart timer_callback(struct hrtimer *timer)
 		pr_info("LED3 %d", intensity_Led3);
 	}
     }
-//     pr_info("Timer Callback function Called PWM is  [%d%%]\n",kCounter*10);
 
     kCounter ++;
     if(kCounter == 10)
@@ -240,8 +239,8 @@ static ssize_t device_read(struct file *filp, char __user *buffer, size_t length
 
 	if (*offset == 0)
 	{
-		sprintf(buffer, "Current intensity Led1 = %d, Current intensity of Led2 = %d, Current intensity of Led3 = %d", \
-			intensity_Led1, intensity_Led2, intensity_Led3);
+		sprintf(buffer, "Current intensity Led1 = %d, Current intensity of Led2 = %d, Current intensity of Led3 = %d, %d",\
+			intensity_Led1, intensity_Led2, intensity_Led3, clicks);
 		*offset = strlen(buffer);
 		return *offset;
 	}
@@ -262,21 +261,24 @@ static ssize_t device_write(struct file *filp, const char __user *buff,
 	char kermsg[BUF_LEN+1] = {"\0"};
 	if(copy_from_user(kermsg, buff, len-1)){return -EFAULT;}
 	// Setting intensity of LED 1
+	if(strcmp(kermsg, "Led1_intensity=25")==0){sscanf("0", "%d", &intensity_Led1);} 
 	if(strcmp(kermsg, "Led1_intensity=25")==0){sscanf("25", "%d", &intensity_Led1);} 
 	if(strcmp(kermsg, "Led1_intensity=50")==0){sscanf("50", "%d", &intensity_Led1);} 
 	if(strcmp(kermsg, "Led1_intensity=75")==0){sscanf("75", "%d", &intensity_Led1);} 
 	if(strcmp(kermsg, "Led1_intensity=100")==0){sscanf("100", "%d", &intensity_Led1);} 
 	// Setting intensity of LED 2
+	if(strcmp(kermsg, "Led2_intensity=25")==0){sscanf("0", "%d", &intensity_Led2);} 
 	if(strcmp(kermsg, "Led2_intensity=25")==0){sscanf("25", "%d", &intensity_Led2);} 
 	if(strcmp(kermsg, "Led2_intensity=50")==0){sscanf("50", "%d", &intensity_Led2);} 
 	if(strcmp(kermsg, "Led2_intensity=75")==0){sscanf("75", "%d", &intensity_Led2);} 
 	if(strcmp(kermsg, "Led2_intensity=100")==0){sscanf("100", "%d", &intensity_Led2);} 
 	// Setting intensity of LED 3
+	if(strcmp(kermsg, "Led3_intensity=25")==0){sscanf("0", "%d", &intensity_Led3);} 
 	if(strcmp(kermsg, "Led3_intensity=25")==0){sscanf("25", "%d", &intensity_Led3);} 
 	if(strcmp(kermsg, "Led3_intensity=50")==0){sscanf("50", "%d", &intensity_Led3);} 
 	if(strcmp(kermsg, "Led3_intensity=75")==0){sscanf("75", "%d", &intensity_Led3);} 
 	if(strcmp(kermsg, "Led3_intensity=100")==0){sscanf("100", "%d", &intensity_Led3);} 
-    return -EINVAL; 
+    return len; 
 } 
 
 // Called when module in initialized
