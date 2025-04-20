@@ -17,6 +17,7 @@
 #include <linux/hrtimer.h>
 #include <linux/ktime.h>
 #include <linux/err.h>
+#include <asm/errno.h>
 
 // Global defines /  Preprocessor
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0) 
@@ -74,7 +75,7 @@ static struct gpio buttons[] = { { 18, GPIOF_IN, "BUTTON" }, { 16, GPIOF_IN, "BU
 	Interrupt Service Routine
 	Executed whenever button is pushed
 */
-static irqreturn_t button_isr(int irq, void *data) 
+static irqreturn_t button_isr(int irq, void *data)  
 {
     int value_1 = gpio_get_value(buttons[0].gpio);
     int value_2 = gpio_get_value(buttons[1].gpio);
@@ -233,12 +234,23 @@ static int device_release(struct inode *inode, struct file *file)
 }
 
 // Called when we read data using driver file
-static ssize_t device_read(struct file *filp,
-                           char __user *buffer,
-                           size_t length,
-                           loff_t *offset) 
-{ 
+static ssize_t device_read(struct file *filp, char __user *buffer, size_t length, loff_t *offset) 
+{
 	pr_info("Reading from LED Controller module.\n");
+
+	if (*offset == 0)
+	{
+		sprintf(buffer, "Current intensity Led1 = %d, Current intensity of Led2 = %d, Current intensity of Led3 = %d", \
+			intensity_Led1, intensity_Led2, intensity_Led3);
+		*offset = strlen(buffer);
+		return *offset;
+	}
+	else
+	{
+		*offset = 0;
+		return 0;
+	}
+
 	return 0;
 }
 
@@ -246,7 +258,24 @@ static ssize_t device_read(struct file *filp,
 static ssize_t device_write(struct file *filp, const char __user *buff, 
                             size_t len, loff_t *off) 
 { 
-    pr_info("Writing through LED Controller module.\n"); 
+	pr_info("Writing through LED Controller module.\n");
+	char kermsg[BUF_LEN+1] = {"\0"};
+	if(copy_from_user(kermsg, buff, len-1)){return -EFAULT;}
+	// Setting intensity of LED 1
+	if(strcmp(kermsg, "Led1_intensity=25")){sscanf("25", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=50")){sscanf("50", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=75")){sscanf("75", "%d", &intensity_Led1);} 
+	if(strcmp(kermsg, "Led1_intensity=100")){sscanf("100", "%d", &intensity_Led1);} 
+	// Setting intensity of LED 2
+	if(strcmp(kermsg, "Led2_intensity=25")){sscanf("25", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=50")){sscanf("50", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=75")){sscanf("75", "%d", &intensity_Led2);} 
+	if(strcmp(kermsg, "Led2_intensity=100")){sscanf("100", "%d", &intensity_Led2);} 
+	// Setting intensity of LED 3
+	if(strcmp(kermsg, "Led3_intensity=25")){sscanf("25", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=50")){sscanf("50", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=75")){sscanf("75", "%d", &intensity_Led3);} 
+	if(strcmp(kermsg, "Led3_intensity=100")){sscanf("100", "%d", &intensity_Led3);} 
     return -EINVAL; 
 } 
 
