@@ -239,8 +239,7 @@ static ssize_t device_read(struct file *filp, char __user *buffer, size_t length
 
 	if (*offset == 0)
 	{
-		sprintf(buffer, "Current intensity Led1 = %d, Current intensity of Led2 = %d, Current intensity of Led3 = %d, %d",\
-			intensity_Led1, intensity_Led2, intensity_Led3, clicks);
+		sprintf(buffer, "%d",clicks);
 		*offset = strlen(buffer);
 		return *offset;
 	}
