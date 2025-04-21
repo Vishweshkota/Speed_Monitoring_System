@@ -19,7 +19,7 @@ This software design apporach seperates the functionality into two components:
 - It reads the data from driver using sysfs every 10s.
 - Based on the data read (Speed) it calculates the intensity of each LED and writes into the sysfs so LEDs intensity can be determined by the driver.
 ### UML/Block Diagram
-![UML/Block_Diagram](https://github.com/user-attachments/assets/b2982a5c-3371-4dac-acaa-c4d775e8b336)
+![UML](https://github.com/user-attachments/assets/42ded1c7-a934-46b6-bedc-823a3938f4de)
 
 
 ### Hardware setup
