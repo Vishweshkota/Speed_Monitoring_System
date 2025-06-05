@@ -1,4 +1,4 @@
-# Speed_Monitoring_LEDs
+# Speed_Monitoring_System
 This is a simple speed monitoring system build using RUST (User Space) and C (Kernel Space)
 
 ### Block Diagram/System Overview
