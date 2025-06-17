@@ -124,7 +124,7 @@ enum hrtimer_restart timer_callback(struct hrtimer *timer)
 	if (kCounter < intensity_Led3/10)
 	{
 		writel((1<<21), ledBaseAddr+7);
-		pr_info("LED1 %d", intensity_Led1);
+		pr_info("LED1 %d", intensity_Led3);
 	}
 	else
 	{
